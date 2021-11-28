@@ -6,9 +6,9 @@ Yamaha の FM 音源 YMZ294 を使って音楽を再生するためのライブ�
 
 ## 必要な部品
 
-- [YMZ294](https://akizukidenshi.com/catalog/g/gI-12141/){:target="\_blank"}
-- [4MHz 発振器](https://akizukidenshi.com/catalog/g/gP-10387/){:target="\_blank"}
-- [スピーカー](https://akizukidenshi.com/catalog/g/gP-03285/){:target="\_blank"}
+- [YMZ294](https://akizukidenshi.com/catalog/g/gI-12141/)
+- [4MHz 発振器](https://akizukidenshi.com/catalog/g/gP-10387/)
+- [スピーカー](https://akizukidenshi.com/catalog/g/gP-03285/)
 - 抵抗 10kΩ
 - 抵抗 100Ω
 - Arduino
@@ -19,7 +19,7 @@ Yamaha の FM 音源 YMZ294 を使って音楽を再生するためのライブ�
 ## チュートリアル
 
 1. ソースコードをダウンロード
-   - [リポジトリのページ](https://github.com/kanade-k-1228/YMZ294/){:target="\_blank"} 右上の Code から、zip を選択しダウンロード
+   - [リポジトリのページ](https://github.com/kanade-k-1228/YMZ294/)右上の Code から、zip を選択しダウンロード
    - または、コマンドライン上で `git clone https://github.com/kanade-k-1228/YMZ294.git`
 2. ライブラリのインクルード
    - ダウンロードした `YMZ294/libralies` に含まれる `PlayMusic` と `YMZ294` を
@@ -29,10 +29,14 @@ Yamaha の FM 音源 YMZ294 を使って音楽を再生するためのライブ�
    - ArduinoIDE で `YMZ294/sample/00_include` を開いて、
    - 「検証」を押してみて、エラーが起きなければ、無事にインストール完了です！
 4. ブレッドボードで配線
+
+![](img/circuit.dio.svg)
+
 5. テスト
-   - ArduinoIDE で `YMZ294/sample/01_sound` を開いて、
-   - ボードの設定を確認して、
-   - 書き込み！
+
+- ArduinoIDE で `YMZ294/sample/01_sound` を開いて、
+- ボードの設定を確認して、
+- 書き込み！
 
 ## トラブルシューティング
 
@@ -42,7 +46,7 @@ Yamaha の FM 音源 YMZ294 を使って音楽を再生するためのライブ�
 
 ## YMZ294 のしくみ
 
-> 音が生成されるまでの流れを解説するよ！ [データシート](./ymz294.pdf){:target="\_blank"} の図を参照してね！
+> 音が生成されるまでの流れを解説するよ！ [データシート](./ymz294.pdf)の図を参照してね！
 
 1. 楽音発生器
    - ある決まった周波数の矩形波（四角形の波）を生成します
@@ -82,7 +86,7 @@ Yamaha の FM 音源 YMZ294 を使って音楽を再生するためのライブ�
 ### 好きな音楽を再生する
 
 1. MIDI エディタで曲を打ち込む
-   - [Domino](https://takabosoft.com/domino){:target="\_blank"} がおすすめ
+   - [Domino](https://takabosoft.com/domino)がおすすめ
    - Domino 用のテンプレートファイルが `sample/07_play_music/template.dms` にあります
    - 曲を打ち込んだら `.mid` ファイルを出力
 2. `.midi` を `.h` に変換する

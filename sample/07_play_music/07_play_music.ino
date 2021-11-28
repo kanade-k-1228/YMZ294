@@ -1,6 +1,6 @@
 // 曲を選ぶドン！
-#include "makaimura.h"
-// #include "rockman_dr_wily.h"
+// #include "makaimura.h"
+#include "rockman_dr_wily.h"
 
 #include <PlayMusic.h>
 #include <YMZ294.h>

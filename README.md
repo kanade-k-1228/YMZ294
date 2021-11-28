@@ -6,9 +6,9 @@ Yamaha の FM 音源 YMZ294 を使って音楽を再生するためのライブ�
 
 ## 必要な部品
 
-- [YMZ294](https://akizukidenshi.com/catalog/g/gI-12141/)
-- [4MHz 発振器](https://akizukidenshi.com/catalog/g/gP-10387/)
-- [スピーカー](https://akizukidenshi.com/catalog/g/gP-03285/)
+- [YMZ294](https://akizukidenshi.com/catalog/g/gI-12141/){:target="\_blank"}
+- [4MHz 発振器](https://akizukidenshi.com/catalog/g/gP-10387/){:target="\_blank"}
+- [スピーカー](https://akizukidenshi.com/catalog/g/gP-03285/){:target="\_blank"}
 - 抵抗 10kΩ
 - 抵抗 100Ω
 - Arduino
@@ -19,10 +19,10 @@ Yamaha の FM 音源 YMZ294 を使って音楽を再生するためのライブ�
 ## チュートリアル
 
 1. ソースコードをダウンロード
-   - [リポジトリのページ](https://github.com/kanade-k-1228/YMZ294/) 右上の Code から、zip を選択しダウンロード
+   - [リポジトリのページ](https://github.com/kanade-k-1228/YMZ294/){:target="\_blank"} 右上の Code から、zip を選択しダウンロード
    - または、コマンドライン上で `git clone https://github.com/kanade-k-1228/YMZ294.git`
 2. ライブラリのインクルード
-   - ダウンロードした `YMZ294` の中の `libralies` に含まれる `PlayMusic` と `YMZ294` を
+   - ダウンロードした `YMZ294/libralies` に含まれる `PlayMusic` と `YMZ294` を
    - Arduino のライブラリが置いてあるディレクトリに移動
      - Windows なら `C:\Users\[ユーザー名]\Documents\Arduino\libraries`
 3. ライブラリのテスト
@@ -42,7 +42,7 @@ Yamaha の FM 音源 YMZ294 を使って音楽を再生するためのライブ�
 
 ## YMZ294 のしくみ
 
-> 音が生成されるまでの流れを解説するよ！ [データシート](./ymz294.pdf) の図を参照してね！
+> 音が生成されるまでの流れを解説するよ！ [データシート](./ymz294.pdf){:target="\_blank"} の図を参照してね！
 
 1. 楽音発生器
    - ある決まった周波数の矩形波（四角形の波）を生成します
@@ -81,6 +81,44 @@ Yamaha の FM 音源 YMZ294 を使って音楽を再生するためのライブ�
 
 ### 好きな音楽を再生する
 
+1. MIDI エディタで曲を打ち込む
+   - [Domino](https://takabosoft.com/domino){:target="\_blank"} がおすすめ
+   - Domino 用のテンプレートファイルが `sample/07_play_music/template.dms` にあります
+   - 曲を打ち込んだら `.mid` ファイルを出力
+2. `.midi` を `.h` に変換する
+   - [Midifles](https://github.com/kanade-k-1228/midifile) に変換プログラムがあるので、
+   - `cd`
+   - `git clone https://github.com/kanade-k-1228/midifile.git`
+   - `cd midifile`
+   - `make midi2ymz`
+   - して、プログラムをビルドしてください
+   - `~/midifile ???.mid > ???.h` で変換します（`???` は自分で作った midi ファイル名を入れる）
+3. include して書き込む
+   - `???.h` を `sample/07_play_music` 内に移動します
+   - `07_play_music.ino` の先頭の `#include "XXX.h"` を `#include "???.h"` に書き換えます
+   - エラーが出た場合
+     - メモリが足りない？
+     - `PROGMEM` が悪さをしてる？
+
+`sample/06_play_rockman` の `loop()` を見ると、たくさんの `play_sound()` と `delay()` が並んでいます。このやり方では、Arduino のプログラムメモリを無駄遣いしてしまい、長い曲を再生できません。このため、ここだけのデータフォーマットを作って曲のデータを表現しています。
+
+|     |     |                 |                                                                   |
+| --- | --- | --------------- | ----------------------------------------------------------------- |
+|     | 15  | 0:Delay 1:Sound | 切り替えます                                                      |
+|     |     | IF Delay        |                                                                   |
+| 14  | 0   | Delay Time [ms] |                                                                   |
+|     |     | IF Sound        |                                                                   |
+| 14  | 13  | Chip Sellect    | 複数接続しない場合、チップセレクトは不要です                      |
+| 12  | 11  | Channel         | 1~3 のチャンネル番号を指定 0 番は予約済（ノイズ周波数に使う予定） |
+| 10  | 4   | Note Number     |                                                                   |
+| 3   | 0   | Velocity        |                                                                   |
+
 ### 複数接続
 
+YMZ294 は 矩形波 3 チャンネルしかありません。ファミコンは矩形波 2 Ch + 三角波 1 Ch + ノイズ 1 Ch あるので、ファミコンの曲を再生しようとすると少し足りなかったりします。
+
+ノイズを再生しようとすると、ノイズと矩形波の個別の音量調整ができないので、結局チャンネルを一つつぶすことになります。
+
 YMZ294 には、「/CS」（チップセレクト）というピンがあり、これを使って複数の YMZ294 を並列に接続できます。
+
+Arduino ピンが足らなくなるので、シフトレジスタを使って拡張します。

@@ -1,32 +1,48 @@
 # YMZ294
 
-## トラブルシューティング
+Yamaha の FM 音源 YMZ294 を使って音楽を再生するためのライブラリ（チュートリアルもあるよ！）
 
-- 音が出ない！！！
-  - 接続されているピン番号は合っていますか？
-  - SO-GND 間に抵抗は繋いでいますか？
-- チャンネルが少ない！！！
-  - → [複数接続](#複数接続)
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">YMZ294でロックマン <a href="https://t.co/W3yztZKuT6">pic.twitter.com/W3yztZKuT6</a></p>&mdash; Канадэ (@kanade_k_1228) <a href="https://twitter.com/kanade_k_1228/status/1464302691882967043?ref_src=twsrc%5Etfw">November 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-## 使い方
+## 必要な部品
 
-### Arduino ライブラリのインストール
+- [YMZ294](https://akizukidenshi.com/catalog/g/gI-12141/)
+- [4MHz 発振器](https://akizukidenshi.com/catalog/g/gP-10387/)
+- [スピーカー](https://akizukidenshi.com/catalog/g/gP-03285/)
+- 抵抗 10kΩ
+- 抵抗 100Ω
+- Arduino
+- ブレッドボード
+- ジャンパワイヤ
+- USB ケーブル (Arduino - PC)
+
+## チュートリアル
 
 1. ソースコードをダウンロード
    - [リポジトリのページ](https://github.com/kanade-k-1228/YMZ294/) 右上の Code から、zip を選択しダウンロード
+   - または、コマンドライン上で `git clone https://github.com/kanade-k-1228/YMZ294.git`
 2. ライブラリのインクルード
-   - Arduino IDE の 「スケッチ」→「ライブラリをインクルード」→ 「.ZIP 形式のライブラリをインストール」から、
-   - 先ほどダウンロードした「YMZ298.zip」を選択
-   - プログラムの先頭に
-   - `#include <YMZ294.h>`
-   - と書くことで、ライブラリを使えるようになります！
-3. テスト
-   - このリポジトリの「sample/test.ino」の内容をスケッチにコピペして、
-   - 「検証」を押してみて、エラーが起きなければ、無事にインストール完了です
+   - ダウンロードした `YMZ294` の中の `libralies` に含まれる `PlayMusic` と `YMZ294` を
+   - Arduino のライブラリが置いてあるディレクトリに移動
+     - Windows なら `C:\Users\[ユーザー名]\Documents\Arduino\libraries`
+3. ライブラリのテスト
+   - ArduinoIDE で `YMZ294/sample/00_include` を開いて、
+   - 「検証」を押してみて、エラーが起きなければ、無事にインストール完了です！
+4. ブレッドボードで配線
+5. テスト
+   - ArduinoIDE で `YMZ294/sample/01_sound` を開いて、
+   - ボードの設定を確認して、
+   - 書き込み！
 
-### YMZ294 のしくみ
+## トラブルシューティング
 
-音が生成されるまでの流れを解説するよ！データシートの図を参照してね！
+- 音が出ない！！！
+  - 接続されているピン番号は合っていますか？（根気よく確かめて…）
+  - SO-GND 間に抵抗は繋いでいますか？
+
+## YMZ294 のしくみ
+
+> 音が生成されるまでの流れを解説するよ！ [データシート](./ymz294.pdf) の図を参照してね！
 
 1. 楽音発生器
    - ある決まった周波数の矩形波（四角形の波）を生成します
@@ -42,7 +58,7 @@
 
 ### YMZ294 のしくみ（詳細版）
 
-「ノイズ」「エンベロープ」という機能を使うとより豊かな表現ができるよ！
+> 「ノイズ」「エンベロープ」という機能を使うとより豊かな表現ができるよ！
 
 1. 楽音発生器
 2. ノイズ発生器
@@ -52,7 +68,7 @@
 
 ### ライブラリの使い方
 
-「sample」の中にサンプルコードがあるのでいろいろ試してみて！
+> 「sample」の中にサンプルコードがあるのでいろいろ試してみて！
 
 1. YMZ294 のピンがどこに繋がっているかを設定します
    - `YMZ294 sound()`
@@ -62,6 +78,8 @@
 3. 音の設定をして再生します
 
 ## 高度な使い方
+
+### 好きな音楽を再生する
 
 ### 複数接続
 

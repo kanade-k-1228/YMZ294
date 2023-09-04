@@ -42,11 +42,11 @@ enum class Channel : byte {
 class YMZ294 {
 private:
   // Arduino Pins
-  const byte PIN_CS;  // Chip Select
-  const byte PIN_WR;  // Write Enable
-  const byte PIN_A0;  // Address / Data Select
-  const byte PIN_IC;  // Reset
-  const byte PIN_D0, PIN_D1, PIN_D2, PIN_D3, PIN_D4, PIN_D5, PIN_D6, PIN_D7;
+  const byte YMZ294_CS;  // Chip Select
+  const byte YMZ294_WR;  // Write Enable
+  const byte YMZ294_A0;  // Address / Data Select
+  const byte YMZ294_IC;  // Reset
+  const byte YMZ294_D0, YMZ294_D1, YMZ294_D2, YMZ294_D3, YMZ294_D4, YMZ294_D5, YMZ294_D6, YMZ294_D7;
   const long int BASE_FREQ = 125000;
   const int CH_COUNT = 3;
 

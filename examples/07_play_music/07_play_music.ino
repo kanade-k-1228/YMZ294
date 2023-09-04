@@ -1,5 +1,7 @@
 // 曲を選ぶドン！
 // #include "makaimura.h"
+// #include "ugoku.h"
+// #include "bigbr.h"
 #include "rockman_dr_wily.h"
 
 #include <YMZ294.h>
